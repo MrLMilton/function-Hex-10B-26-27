@@ -2,6 +2,12 @@
 {
     internal class Program
     {
+        static void validStatments(bool a, bool b, bool c) //subroutine to tell the user which criteria they have met
+        {
+            Console.WriteLine($"The code starts with a #: {a}");
+            Console.WriteLine($"The length of the code is valid: {b}");
+            Console.WriteLine($"All charecters in the hexcode are valid: {c}");
+        }
         char[] hexCodes = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E','F' };
         static bool ValidChars (string code, char [] hexCodes)
         {
@@ -52,9 +58,42 @@
             }
         }
 
+        static int valueFinder(char hex, char[] hexadecimal) //Mark E,Mark N
+        {
+            int position = 0;
+            for (int i = 0; i < hexadecimal.Length; i++)//Mark O
+            {
+                if (hex == hexadecimal[i])
+                {
+                    position = i;
+                }
+            }
+            return position;
+        }
+        static void RGB(string hex, char[] hexadecimal)
+        {
+            Console.WriteLine($"You entered {hex} as your colour code");
+            int red = (valueFinder(hex[1], hexadecimal) * 16) + valueFinder(hex[2], hexadecimal);
+            int green = (valueFinder(hex[3], hexadecimal) * 16) + valueFinder(hex[4], hexadecimal);
+            int blue = (valueFinder(hex[5], hexadecimal) * 16) + valueFinder(hex[6], hexadecimal);
+            Console.WriteLine($"The hexcode you entered is equal to the values of Red - {red}, Grren - {green}, Blue - {blue}");
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            char[] hexadecimal = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+            Console.WriteLine("Please enter a hex code for a colour\nThe code must start with a #\nThe number code after the # must be 6 numbers in length");
+            string Hexcode = Console.ReadLine().ToUpper();
+            bool hash = HashChecker(Hexcode), length = LengthChecker(Hexcode), chars = ValidChars(Hexcode, hexadecimal);
+            while (!hash || !length || !chars)
+            {
+                validStatments(hash, length, chars);
+                Console.WriteLine("Invalid hex code\nPlease enter a hex code for a colour\nThe code must start with a #\nThe number code after the # must be 6 numbers in length");
+                Hexcode = Console.ReadLine().ToUpper();
+                hash = HashChecker(Hexcode); 
+                length = LengthChecker(Hexcode);
+                chars = ValidChars(Hexcode, hexadecimal);
+            }
+            RGB(Hexcode, hexadecimal);
         }
     }
 }
