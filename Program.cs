@@ -8,7 +8,6 @@
             Console.WriteLine($"The length of the code is valid: {b}");
             Console.WriteLine($"All charecters in the hexcode are valid: {c}");
         }
-        char[] hexCodes = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E','F' };
         static bool ValidChars (string code, char [] hexCodes)
         {
             bool valid = true;
@@ -70,13 +69,14 @@
             }
             return position;
         }
-        static void RGB(string hex, char[] hexadecimal)
+        static int[] RGB(string hex, char[] hexadecimal)
         {
+            int[] RGBValues = new int[3];
             Console.WriteLine($"You entered {hex} as your colour code");
-            int red = (valueFinder(hex[1], hexadecimal) * 16) + valueFinder(hex[2], hexadecimal);
-            int green = (valueFinder(hex[3], hexadecimal) * 16) + valueFinder(hex[4], hexadecimal);
-            int blue = (valueFinder(hex[5], hexadecimal) * 16) + valueFinder(hex[6], hexadecimal);
-            Console.WriteLine($"The hexcode you entered is equal to the values of Red - {red}, Grren - {green}, Blue - {blue}");
+            RGBValues[0] = (valueFinder(hex[1], hexadecimal) * 16) + valueFinder(hex[2], hexadecimal);
+            RGBValues[1] = (valueFinder(hex[3], hexadecimal) * 16) + valueFinder(hex[4], hexadecimal);
+            RGBValues[2] = (valueFinder(hex[5], hexadecimal) * 16) + valueFinder(hex[6], hexadecimal);
+            return RGBValues;
         }
         static void Main(string[] args)
         {
@@ -93,7 +93,9 @@
                 length = LengthChecker(Hexcode);
                 chars = ValidChars(Hexcode, hexadecimal);
             }
-            RGB(Hexcode, hexadecimal);
+            int[] Values =  RGB(Hexcode, hexadecimal);
+            Console.WriteLine($"The hexcode you entered is equal to the values of Red - {Values[0]}, Grren - {Values[1]}, Blue - {Values[2]}");
+
         }
     }
 }
